@@ -6,7 +6,13 @@ const app = express();
 app.use(cors());
 
 const PORT = 3000;
-const productsList = [{ "id": 1, price: "50", claimed: "20" }, { "id": 2, price: "56" ,claimed: "0"}, { "id": 3, price: "67" ,claimed: "40"}]
+const productsList = [
+  { "id": 1, price: "50", claimed: "20" }, 
+  { "id": 2, price: "56" ,claimed: "0"},
+  { "id": 3, price: "66" ,claimed: "10"}, 
+  { "id": 4, price: "70" ,claimed: "0"}, 
+  { "id": 5, price: "67" ,claimed: "50"}
+]
 
 app.get("/sse", function (req, res) {
 
