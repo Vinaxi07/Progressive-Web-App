@@ -1,21 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
 
+const serverBaseURL = "http://localhost:3000";
+
+
 const App = () =>{
-  const [ listening, setListening ] = useState(false);
 
-  useEffect( () => {
-    if (!listening) {
-      const events = new EventSource('http://localhost:3001/events');
+  useEffect(() => {
 
-      events.onmessage = (event) => {
-        const parsedData = JSON.parse(event.data);
-        console.log({parsedData});
+    // connect sse endpoint
+    const sse = new EventSource(`${serverBaseURL}/sse`,
+      { withCredentials: true });
 
-      };
-      setListening(true);
+    let setRealtimeData = (data: any)=> {
+      //console.log({data});
+      const parsedData = JSON.parse(data);
     }
-  }, [listening]);
+
+    sse.onopen = () =>{
+      // on open
+    }
+
+    // catch messages/ updates
+    sse.onmessage = (event) => {
+      console.log({event});
+      
+      setRealtimeData(event.data)
+    };
+
+    sse.addEventListener("update_price",(updates)=>{
+      console.log({updates});
+      
+    })
+
+    // error
+    sse.onerror = () => {
+      // error log here 
+      sse.close();
+    }
+
+    return () => {
+      sse.close();
+    };
+  }, []);
 
   return (
     <div className="App">
