@@ -4,7 +4,7 @@ import ProductConstant from "../../constants/product-constant.js";
 
 const serverBaseURL = "http://localhost:3000";
 
-const ProductsGrid = () => {
+const ProductsList = () => {
 
     let [productsList, setProductsList] = useState(ProductConstant)
 
@@ -14,25 +14,18 @@ const ProductsGrid = () => {
       withCredentials: true,
     });
 
-    let setRealtimeData = (data: any) => {
-      //console.log({data});
-      const parsedData = JSON.parse(data);
-
-      console.log({parsedData})
-
-    };
-
+    
     sse.onopen = () => {
       // on open
     };
 
     // catch messages/ updates
     sse.onmessage = (event) => {
-      
     };
 
     sse.addEventListener("update_price", (updates) => {
-      console.log({ updates });
+      setRealtimeData(updates)
+
     });
 
     // error
@@ -45,6 +38,31 @@ const ProductsGrid = () => {
       sse.close();
     };
   }, []);
+
+  let setRealtimeData = (updates: any) => {
+    //console.log({data});
+    const parsedUpdates = JSON.parse(updates.data || {});
+
+
+    let updatedProductIndex = productsList.findIndex(product=>product.id === parsedUpdates.id)
+    if(updatedProductIndex !== -1){
+
+      let updatedProducts = productsList
+      updatedProducts[updatedProductIndex] = {
+        ...productsList[updatedProductIndex],
+        ...parsedUpdates
+      }
+
+      console.log({updatedProducts});
+      
+
+      setProductsList(updatedProducts)
+    }
+  //  console.log({parsedUpdates})
+  };
+
+  console.log({productsList});
+  
 
   return (
     <div className="wrapper">
@@ -71,4 +89,4 @@ const ProductsGrid = () => {
   );
 };
 
-export default ProductsGrid;
+export default ProductsList;
