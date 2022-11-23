@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
+import OfferDealsComponent from './components/offer-deal-component/offer-deal';
+
 
 const serverBaseURL = "http://localhost:3000";
 
@@ -46,19 +48,7 @@ const App = () =>{
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <OfferDealsComponent/>
     </div>
   );
 }
