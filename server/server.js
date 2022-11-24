@@ -36,10 +36,11 @@ app.get("/sse", function (req, res) {
     let updates = JSON.stringify(updateProductPrice(productsList) || {})
 
     res.write(
-      `id: ${Math.random()}\nevent: update_price\ndata: ${updates}`
+      `id:1\nevent: update_price\ndata: ${updates}`
     );
     res.write("\n\n");
   }, 3000);
+  
 
 });
 
