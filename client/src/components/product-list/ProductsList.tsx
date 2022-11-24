@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./offer-deals.css";
-import ProductConstant from "../../constants/product-constant.js";
+import "./product-list.css";
+import { ProductsList as ProductsListConst } from "../../constants/index.js";
 
 const serverBaseURL = "http://localhost:3000";
 
 const ProductsList = () => {
-
-    let [productsList, setProductsList] = useState(ProductConstant)
+  let [productsList, setProductsList] = useState(ProductsListConst);
 
   useEffect(() => {
     // connect sse endpoint
@@ -14,18 +13,15 @@ const ProductsList = () => {
       withCredentials: true,
     });
 
-    
     sse.onopen = () => {
       // on open
     };
 
     // catch messages/ updates
-    sse.onmessage = (event) => {
-    };
+    sse.onmessage = (event) => {};
 
     sse.addEventListener("update_price", (updates) => {
-      setRealtimeData(updates)
-
+      setRealtimeData(updates);
     });
 
     // error
@@ -43,26 +39,21 @@ const ProductsList = () => {
     //console.log({data});
     const parsedUpdates = JSON.parse(updates.data || {});
 
-
-    let updatedProductIndex = productsList.findIndex(product=>product.id === parsedUpdates.id)
-    if(updatedProductIndex !== -1){
-
-      let updatedProducts = productsList
+    let updatedProductIndex = productsList.findIndex(
+      (product) => product.id === parsedUpdates.id
+    );
+    if (updatedProductIndex !== -1) {
+      let updatedProducts = [...productsList];
       updatedProducts[updatedProductIndex] = {
         ...productsList[updatedProductIndex],
-        ...parsedUpdates
-      }
-
-      console.log({updatedProducts});
-      
-
-      setProductsList(updatedProducts)
+        ...parsedUpdates,
+      };
+      setProductsList(updatedProducts);
     }
-  //  console.log({parsedUpdates})
+    //  console.log({parsedUpdates})
   };
 
-  console.log({productsList});
-  
+  console.log({ productsList });
 
   return (
     <div className="wrapper">
