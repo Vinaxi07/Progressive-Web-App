@@ -20,7 +20,13 @@ const ProductsList = () => {
     // catch messages/ updates
     sse.onmessage = (event) => {};
 
+    // listen product price updates
     sse.addEventListener("update_price", (updates) => {
+      setRealtimeData(updates);
+    });
+
+    // listen product claimed udpates
+    sse.addEventListener("update_claimed", (updates) => {
       setRealtimeData(updates);
     });
 
@@ -56,7 +62,7 @@ const ProductsList = () => {
     [productsList]
   );
 
-  console.log({ productsList });
+ // console.log({ productsList });
 
   return (
     <div className="wrapper">

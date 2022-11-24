@@ -1,17 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-const updateProductPrice = require('./helpers/getProductsUpdates')
+const {updateProductDetails, productsList: productsListConst}= require('./helpers/getProductsUpdates')
 
 const app = express();
 app.use(cors());
 
 const PORT = 3000;
-const productsList = [
-  { "id": 1, price: "50", claimed: "20" }, 
-  { "id": 2, price: "56" ,claimed: "0"},
-  { "id": 3, price: "66" ,claimed: "10"}, 
-  { "id": 4, price: "70" ,claimed: "0"}, 
-  { "id": 5, price: "67" ,claimed: "50"}
+let productsList = [
+  { "id": 1, price: 50, claimed: 20}, 
+  { "id": 2, price: 56 ,claimed: 0},
+  { "id": 3, price: 66,claimed: 10}, 
+  { "id": 4, price: 70 ,claimed: 0}, 
+  { "id": 5, price: 67 ,claimed: 50}
 ]
 
 app.get("/sse", function (req, res) {
@@ -31,17 +31,20 @@ app.get("/sse", function (req, res) {
     Connection: "keep-alive"
   });
 
-  // write to client about updates
+  // write to client about price updates
   setInterval(() => {
-    let updates = JSON.stringify(updateProductPrice(productsList) || {})
+
+    let productsListInstance = new productsListConst(productsList)
+    let updatedProduct= updateProductDetails(productsListInstance?.products || productsList) || {}
+
+    productsListInstance.updateProductList(updatedProduct)
+    let stringifyUpdates = JSON.stringify(updatedProduct)
 
     res.write(
-      `id:1\nevent: update_price\ndata: ${updates}`
+      `id:1\nevent: update_price\ndata: ${stringifyUpdates}`
     );
     res.write("\n\n");
-  }, 3000);
-  
-
+  }, 5000);
 });
 
 app.listen(PORT, function () {
