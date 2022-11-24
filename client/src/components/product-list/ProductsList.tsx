@@ -62,18 +62,16 @@ const ProductsList = () => {
     [productsList]
   );
 
- // console.log({ productsList });
-
   return (
     <div className="wrapper">
       <header>
-        <h1 className="service-worker-title">Service Worker Example</h1>
+        <h1 className="service-worker-title">Progressive Web App</h1>
       </header>
 
       <div className="grid-container">
-        {productsList.map((item) => {
+        {productsList.map((item,index) => {
           return (
-            <div className="grid-item">
+            <div className="grid-item" key={index}>
               <div className="grid-image">
                 <img className="img-src" src={`${item.image}`} />
               </div>
