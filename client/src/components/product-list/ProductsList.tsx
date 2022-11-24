@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./product-list.css";
 import { ProductsList as ProductsListConst } from "../../constants/index.js";
 
@@ -35,23 +35,26 @@ const ProductsList = () => {
     };
   }, []);
 
-  let setRealtimeData = (updates: any) => {
-    //console.log({data});
-    const parsedUpdates = JSON.parse(updates.data || {});
+  let setRealtimeData = useCallback(
+    (updates: any) => {
+      //console.log({data});
+      const parsedUpdates = JSON.parse(updates.data || {});
 
-    let updatedProductIndex = productsList.findIndex(
-      (product) => product.id === parsedUpdates.id
-    );
-    if (updatedProductIndex !== -1) {
-      let updatedProducts = [...productsList];
-      updatedProducts[updatedProductIndex] = {
-        ...productsList[updatedProductIndex],
-        ...parsedUpdates,
-      };
-      setProductsList(updatedProducts);
-    }
-    //  console.log({parsedUpdates})
-  };
+      let updatedProductIndex = productsList.findIndex(
+        (product) => product.id === parsedUpdates.id
+      );
+      if (updatedProductIndex !== -1) {
+        let updatedProducts = [...productsList];
+        updatedProducts[updatedProductIndex] = {
+          ...productsList[updatedProductIndex],
+          ...parsedUpdates,
+        };
+        setProductsList(updatedProducts);
+      }
+      //  console.log({parsedUpdates})
+    },
+    [productsList]
+  );
 
   console.log({ productsList });
 
