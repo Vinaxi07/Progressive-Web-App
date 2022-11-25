@@ -58,13 +58,11 @@ const ProductsList = () => {
         };
         setProductsList(updatedProducts);
       }
-      //  console.log({parsedUpdates})
     },[productsList]
   );
 
-  const ProdFunction = ()=> {
+  const GridCard = ()=> {
    return( productsList.map((item,index) => {
-    console.log(item.claimed)
       return (
         <div className="grid-item" key={index}>
           <div className="grid-image">
@@ -75,15 +73,6 @@ const ProductsList = () => {
           <div className="grid-price padding-top-10">{item.price}</div>
           <div className="grid-progressbar padding-top-10">
 
-          {/* <Box sx={{ display: 'flex', alignItems: 'center' ,width: '100%' }}>
-              <Box sx={{ width: '100%', mr: 1 }}>
-                <LinearProgress variant="determinate" value={item.claimed} />
-              </Box>
-              <Box sx={{ minWidth: 35 }}>
-                <Typography variant="body2" color="text.secondary">{`${item.claimed}%`}</Typography>
-              </Box>
-            </Box> */}
-            
             <div className="grid-progressBar">
               <div className="progressBar-loader">
                <LinearProgress variant="determinate" value={item.claimed} color="error"/>
@@ -104,7 +93,7 @@ const ProductsList = () => {
       </header>
 
       <div className="grid-container">
-        {ProdFunction()}
+        {GridCard()}
       </div>
     </div>
   );
