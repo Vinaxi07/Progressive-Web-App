@@ -31,7 +31,7 @@ module.exports = {
       updatedProduct.price = getRndInteger(50, 70);
     }
 
-    if (updatedProduct && "claimed" in updatedProduct) {
+    if (updatedProduct && "claimed" in updatedProduct && updatedProduct.claimed < 100) {
       updatedProduct.claimed = updatedProduct.claimed + 1;
     }
 
