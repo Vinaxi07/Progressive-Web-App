@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import "./product-list.css";
 import { ProductsList as ProductsListConst } from "../../constants/index.js";
-import {LinearProgress,Typography} from '@mui/material';
+import { LinearProgress, Typography } from "@mui/material";
 
 const serverBaseURL = "http://localhost:3000";
 
@@ -50,20 +50,27 @@ const ProductsList = () => {
         (product) => product.id === parsedUpdates.id
       );
       if (updatedProductIndex !== -1) {
-        let updatedProducts = [...productsList];
-        updatedProducts[updatedProductIndex] = {
-          ...productsList[updatedProductIndex],
-          ...parsedUpdates,
-        };
-        setProductsList(updatedProducts);
+
+        setProductsList(ps=>{
+          let updatedProducts = [...ps];
+          updatedProducts[updatedProductIndex] = {
+            ...ps[updatedProductIndex],
+            ...parsedUpdates,
+          };
+          return updatedProducts
+        })
+
       }
-    },[productsList]
+    },
+    [productsList]
   );
 
-  const GridCard = ()=> {
-   return( productsList.map((item,index) => {
-      return (
-        <div className="grid-item" key={index}>
+  const GridCard: FC<{
+    item: any;
+    index: any;
+  }> = ({ item = {}, index }) => {
+    return (
+     <div className="grid-item" key={index}>
           <div className="grid-image">
             <img className="img-src" src={`${item.image}`} />
           </div>
@@ -84,12 +91,13 @@ const ProductsList = () => {
               <div className="progressBar-percentage">
                 {`${item.claimed}% claimed`}
                </div>
-            </div>
           </div>
         </div>
-      );
-    }))
-  }
+      </div>
+    );
+  };
+
+
   return (
     <div className="wrapper">
       <header>
@@ -97,7 +105,9 @@ const ProductsList = () => {
       </header>
 
       <div className="grid-container">
-        {GridCard()}
+        {productsList.map((item, index) => {
+          return <GridCard item={item} index={index} key={index} />;
+        })}
       </div>
     </div>
   );

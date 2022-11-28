@@ -12,8 +12,8 @@ export const ProductsList = [
         id: 2,
         name: 'headphones',
         image: require('../assets/image/headphone.jpeg'),
-        offer: '90% off',
-        claimed: 50,
+        offer: '60% off',
+        claimed: 0,
         price: 56
     },
     {
