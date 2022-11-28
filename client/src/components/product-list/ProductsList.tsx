@@ -51,12 +51,16 @@ const ProductsList = () => {
         (product) => product.id === parsedUpdates.id
       );
       if (updatedProductIndex !== -1) {
-        let updatedProducts = [...productsList];
-        updatedProducts[updatedProductIndex] = {
-          ...productsList[updatedProductIndex],
-          ...parsedUpdates,
-        };
-        setProductsList(updatedProducts);
+
+        setProductsList(ps=>{
+          let updatedProducts = [...ps];
+          updatedProducts[updatedProductIndex] = {
+            ...ps[updatedProductIndex],
+            ...parsedUpdates,
+          };
+          return updatedProducts
+        })
+
       }
     },
     [productsList]
