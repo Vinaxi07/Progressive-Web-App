@@ -44,7 +44,6 @@ const ProductsList = () => {
 
   let setRealtimeData = useCallback(
     (updates: any) => {
-      //console.log({data});
       const parsedUpdates = JSON.parse(updates.data || {});
 
       let updatedProductIndex = productsList.findIndex(
@@ -68,9 +67,14 @@ const ProductsList = () => {
           <div className="grid-image">
             <img className="img-src" src={`${item.image}`} />
           </div>
-          <div className="grid-name padding-top-10">{item.name}</div>
-          <div className="grid-offer padding-top-10">{item.offer}</div>
-          <div className="grid-price padding-top-10">{item.price}</div>
+          
+          <div className="grid-offer padding-top-10">
+            <span className="offer-percentage">{item.offer}</span>
+            <span className="offer-text">Deal</span>
+            
+            </div>
+            <div className="grid-name padding-top-10">{item.name}</div>
+          <div className="grid-price padding-top-10">&#x20b9;{item.price}</div>
           <div className="grid-progressbar padding-top-10">
 
             <div className="grid-progressBar">
@@ -78,7 +82,7 @@ const ProductsList = () => {
                <LinearProgress variant="determinate" value={item.claimed} color="error"/>
               </div>
               <div className="progressBar-percentage">
-             {`Claimed ${item.claimed}%`}
+                {`${item.claimed}% claimed`}
                </div>
             </div>
           </div>
