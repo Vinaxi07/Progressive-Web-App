@@ -2,8 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const {updateProductDetails, productsList: productsListConst}= require('./helpers/getProductsUpdates')
 
+const corsOptions ={
+  origin:'http://localhost:3001', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 
 const PORT = 3000;
 let productsList = [
