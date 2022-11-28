@@ -2,17 +2,19 @@ let cacheData = 'AppV1'
 this.addEventListener('install',(event)=>{
     event.waitUntil(
         caches.open(cacheData).then((cache)=>{
-            cache.addAll([
+            try{cache.addAll([
                 '/index.html',
                 '/',
-            ])
+            ])}catch(error){
+              console.log({error});
+            }
         })
     )
 })
 
 this.addEventListener('fetch',(event)=>{
     event.respondWith((async () => {
-        const cachedResponse = await caches.match(event.request);
+        try{const cachedResponse = await caches.match(event.request);
         if (cachedResponse) {
           return cachedResponse;
         }
@@ -23,7 +25,8 @@ this.addEventListener('fetch',(event)=>{
           return response;
         }
       
-        return response;
-    
+        return response;}catch(error){
+          return {}
+        }
       })());
 })

@@ -5,16 +5,16 @@ export const ProductsList = [
         name: 'iphone',
         image: require("../assets/image/iphone.png"),
         offer: '60% off',
-        claimed: 10,
-        price: 60
+        claimed: 20,
+        price: 50
     },
     {
         id: 2,
         name: 'headphones',
         image: require('../assets/image/headphone.jpeg'),
         offer: '60% off',
-        claimed: 10,
-        price: 60
+        claimed: 0,
+        price: 56
     },
     {
         id: 3,
@@ -22,22 +22,22 @@ export const ProductsList = [
         image: require('../assets/image/smart-watch.png'),
         offer: '60% off',
         claimed: 10,
-        price: 60
+        price: 66
     },
     {
         id: 4,
         name: 'sim-card',
         image: require('../assets/image/sim-card.png'),
         offer: '60% off',
-        claimed: 10,
-        price: 60
+        claimed: 0,
+        price: 70
     },
     {
         id: 5,
         name: 'macbook',
         image: require('../assets/image/macBook.png'),
         offer: '60% off',
-        claimed: 10,
-        price: 60
+        claimed: 50,
+        price: 67
     },
 ]
