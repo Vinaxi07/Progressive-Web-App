@@ -64,3 +64,15 @@
     padding-left: 10px;
 
   }
+
+
+
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+}
+
+.grid-price{
+  color: #555;
+  font-weight: bold;
+  animation: fadeIn 5s infinite alternate;
+}
