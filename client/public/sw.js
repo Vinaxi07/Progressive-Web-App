@@ -7,22 +7,17 @@ this.addEventListener("install", (event) => {
                 '/static/js/0.chunk.js',
                 '/static/js/bundle.js',
                 '/static/css/main.chunk.css',
-                '/bootstrap.min.css',
                 '/index.html',
-                '/',
-                "/users"
+                '/'
             ])
         })
     )
 })
+
 this.addEventListener("fetch", (event) => {
-
-
-    console.log("url",event.request.url)
-
-
     if (!navigator.onLine) {
-        if (event.request.url === "http://localhost:3001/static/js/1.chunk.js") {
+
+        if (event.request.url === "http://localhost:3001/manifest.json") {
             event.waitUntil(
                 this.registration.showNotification("Internet", {
                     body: "internet not working",
@@ -40,3 +35,14 @@ this.addEventListener("fetch", (event) => {
         )
     }
 }) 
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'send_notification') {
+
+    event.waitUntil(
+        this.registration.showNotification("Cart", {
+            body: event.data.notification,
+        })
+    )
+    }
+  });

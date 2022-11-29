@@ -31,6 +31,16 @@ const ProductsList = () => {
       setRealtimeData(updates);
     });
 
+    sse.addEventListener("cart_notification",(event)=>{
+   //   console.log({event, 1:navigator.serviceWorker});
+
+      navigator.serviceWorker.controller && navigator.serviceWorker.controller.postMessage({
+        type: 'send_notification',
+        notification: event.data
+      });
+
+  })
+
     // error
     sse.onerror = () => {
       // error log here
