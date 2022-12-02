@@ -1,32 +1,48 @@
-let cacheData = 'AppV1'
-this.addEventListener('install',(event)=>{
+let cacheData = "appV1";
+this.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(cacheData).then((cache)=>{
-            try{cache.addAll([
+        caches.open(cacheData).then((cache) => {
+            cache.addAll([
+                '/static/js/main.chunk.js',
+                '/static/js/0.chunk.js',
+                '/static/js/bundle.js',
+                '/static/css/main.chunk.css',
                 '/index.html',
-                '/',
-            ])}catch(error){
-              console.log({error});
-            }
+                '/'
+            ])
         })
     )
 })
 
-this.addEventListener('fetch',(event)=>{
-    event.respondWith((async () => {
-        try{const cachedResponse = await caches.match(event.request);
-        if (cachedResponse) {
-          return cachedResponse;
+this.addEventListener("fetch", (event) => {
+    if (!navigator.onLine) {
+
+        if (event.request.url === "http://localhost:3001/manifest.json") {
+            event.waitUntil(
+                this.registration.showNotification("Internet", {
+                    body: "internet not working",
+                })
+            )
         }
-      
-        const response = await fetch(event.request);
-      
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-        }
-      
-        return response;}catch(error){
-          return {}
-        }
-      })());
-})
+        event.respondWith(
+            caches.match(event.request).then((resp) => {
+                if (resp) {
+                    return resp
+                }
+                let requestUrl = event.request.clone();
+                fetch(requestUrl)
+            })
+        )
+    }
+}) 
+
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'send_notification') {
+
+    event.waitUntil(
+        this.registration.showNotification("Cart", {
+            body: event.data.notification,
+        })
+    )
+    }
+  });

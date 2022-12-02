@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const {updateProductDetails, productsList: productsListConst}= require('./helpers/getProductsUpdates')
+const { updateProductDetails, productsList: productsListConst } = require('./helpers/getProductsUpdates')
 
-const corsOptions ={
-  origin:'http://localhost:3001', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
+const corsOptions = {
+  origin: 'http://localhost:3001',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200
 }
 
 const app = express();
@@ -13,11 +13,11 @@ app.use(cors(corsOptions));
 
 const PORT = 3000;
 let productsList = [
-  { "id": 1, price: 50, claimed: 20}, 
-  { "id": 2, price: 56 ,claimed: 0},
-  { "id": 3, price: 66,claimed: 10}, 
-  { "id": 4, price: 70 ,claimed: 0}, 
-  { "id": 5, price: 67 ,claimed: 50}
+  { "id": 1, price: 50, claimed: 20 },
+  { "id": 2, price: 56, claimed: 0 },
+  { "id": 3, price: 66, claimed: 10 },
+  { "id": 4, price: 70, claimed: 0 },
+  { "id": 5, price: 67, claimed: 50 }
 ]
 
 app.get("/sse", function (req, res) {
@@ -41,7 +41,7 @@ app.get("/sse", function (req, res) {
   setInterval(() => {
 
     let productsListInstance = new productsListConst(productsList)
-    let updatedProduct= updateProductDetails(productsListInstance?.products || productsList) || {}
+    let updatedProduct = updateProductDetails(productsListInstance?.products || productsList) || {}
 
     productsListInstance.updateProductList(updatedProduct)
     let stringifyUpdates = JSON.stringify(updatedProduct)
@@ -51,6 +51,16 @@ app.get("/sse", function (req, res) {
     );
     res.write("\n\n");
   }, 5000);
+
+
+  // send cart notification
+  setInterval(() => {
+    res.write(
+      `event: cart_notification\ndata:Your cart is empty!`
+    );
+    res.write("\n\n");
+  }, 15000);
+
 });
 
 app.listen(PORT, function () {
