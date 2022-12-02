@@ -54,7 +54,7 @@ app.get("/sse", function (req, res) {
 
 
   // send cart notification
-  setInterval(() => {
+  setTimeout(() => {
     res.write(
       `event: cart_notification\ndata:Your cart is empty!`
     );
