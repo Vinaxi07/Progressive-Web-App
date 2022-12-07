@@ -78,3 +78,5 @@ $ node server.js
 $ cd client
 $ npm start
 ```
+
+## Happy Coding 
