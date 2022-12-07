@@ -8,6 +8,11 @@ this.addEventListener("install", (event) => {
                 '/static/js/bundle.js',
                 '/static/css/main.chunk.css',
                 '/index.html',
+                'http://localhost:3001/static/media/iphone.b4e26663.png',
+                'http://localhost:3001/static/media/headphone.5f7898c5.jpeg',
+                'http://localhost:3001/static/media/smart-watch.25079951.png',
+                'http://localhost:3001/static/media/sim-card.077a171f.png',
+                'http://localhost:3001/static/media/macBook.b8f47b44.png',
                 '/'
             ])
         })
