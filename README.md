@@ -5,6 +5,7 @@
 - [Requirements](#requirements)
 - [Installation](#Installation)
 
+---
 
 ## Introduction
 
@@ -44,6 +45,7 @@
 
 <img src="images/Demo_Work.png" style="max-width: 100%"/>
 
+---
 
 ## Installation
 
